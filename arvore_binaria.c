@@ -19,10 +19,20 @@ arv* cria(char,arv*,arv*);
 /* Função que imprime todas as folhas da arvore binaria. */
 void imprime_arv(arv*);
 
+/* Função que verifica se a arvore está vazia. Retorna True se estiver vazia */
+int arv_vazia(arv*);
+
 int main(void)
 {
     /* Cria um ponteiro para o tipo de estrutura arvbin */
     arv *a;
+
+    /*Verifica se a arvore está vazia. */
+    if(arv_vazia(a))
+        {printf("\n Arvore está vazia.\n");}
+        else
+        {printf("\nArvore nao está vazia.\n");}
+        
 
     /* Utiliza  as Funçoes cria() e cria_vazia para criar a arvore binaria. */
     a=cria('A',
@@ -52,6 +62,16 @@ int main(void)
     /*imprime as folhas da arvore binaria*/
     imprime_arv(a);
     
+     /*Verifica se a arvore está vazia. */
+    if(arv_vazia(a))
+        {printf("\n Arvore está vazia.\n");}
+        else
+        {printf("\nArvore nao está vazia.\n");}
+    
+
+
+
+
     return 0;
 }
 
@@ -88,4 +108,9 @@ void imprime_arv(arv* p)
 
     
 
+}
+
+int arv_vazia(arv* p)
+{
+    return p==NULL;
 }
