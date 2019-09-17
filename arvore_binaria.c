@@ -76,7 +76,7 @@ int main(void)
     
     /* Função total_folhas() calcula quantas folhas além da raiz a arvore binaria possui */ 
     printf("\nA Arvore possui 1 raiz e %d de folhas", total_folhas(a)-1);
-    
+
 
     return 0;
 }
@@ -116,17 +116,7 @@ int arv_vazia(arv *p)
 {
     return p == NULL;
 }
-/*
-int total_folhas(arv* a)
-{
-    
-    if(a!=NULL)
-    {
-        
-        return (total_folhas(a->esq)+total_folhas(a->dir));
-    }
-}
-*/
+
 int total_folhas(arv *a)
 {
     if (a == NULL)
