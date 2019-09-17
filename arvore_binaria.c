@@ -26,6 +26,12 @@ int arv_vazia(arv *);
 /* Função que retorna a quantidade total de folhas da arvore binaria. */
 int total_folhas(arv *);
 
+/*Funçao para liberar a memoria alocada da arvore */
+arv *libera_arv(arv *);
+
+/* Funçao para testar se arvore está vazia ou não. */
+void testa_arv(arv *);
+
 int main(void)
 {
     /* Cria um ponteiro para o tipo de estrutura arvbin */
@@ -65,19 +71,18 @@ int main(void)
     imprime_arv(a);
 
     /*Verifica se a arvore está vazia. */
-    if (arv_vazia(a))
-    {
-        printf("\n Arvore está vazia.\n");
-    }
-    else
-    {
-        printf("\nArvore nao está vazia.\n");
-    }
+    testa_arv(a);
+
+    /* Função total_folhas() calcula quantas folhas além da raiz a arvore binaria possui */
+    printf("\nA Arvore possui 1 raiz e %d de folhas\n", total_folhas(a) - 1);
+
+    /*Função para liberar a memoria alocada para arvore binaria*/
+    a = libera_arv(a);
+
+    /*Verifica se a arvore está vazia. */
+    testa_arv(a);
+
     
-    /* Função total_folhas() calcula quantas folhas além da raiz a arvore binaria possui */ 
-    printf("\nA Arvore possui 1 raiz e %d de folhas", total_folhas(a)-1);
-
-
     return 0;
 }
 
@@ -122,11 +127,33 @@ int total_folhas(arv *a)
     if (a == NULL)
         return (0);
     else
-    {  
-        
-        return  1+ total_folhas(a->esq) + total_folhas(a->dir);
-        
+    {
+
+        return 1 + total_folhas(a->esq) + total_folhas(a->dir);
+    }
+}
+
+arv *libera_arv(arv *a)
+{
+    if (a != NULL)
+    {
+        libera_arv(a->esq);
+        libera_arv(a->dir);
+
+        free(a);
     }
 
+    return NULL;
+}
 
+void testa_arv(arv *a)
+{
+    if (arv_vazia(a))
+    {
+        printf("\n Arvore está vazia.\n");
+    }
+    else
+    {
+        printf("\nArvore nao está vazia.\n");
+    }
 }
