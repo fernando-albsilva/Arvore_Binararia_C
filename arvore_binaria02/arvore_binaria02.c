@@ -17,7 +17,7 @@ typedef struct arvbin arv;
 arv *cria_vazia(void);
 
 /* Pergunta para o usuario se quer inserir uma folha na arvore e qual valor */
-arv* chama_insere(arv*);
+arv *chama_insere(arv *);
 
 /*insere uma folha na arvore , se for maior que seu antecessor é jogada para o ramo da direita e se for 
 menor para o ramo da esquerda */
@@ -26,16 +26,21 @@ arv *insere_folha(arv *, int);
 /*imprime a arvore */
 void imprime_arv(arv *);
 
+/*Procura se um valor pertence a arvore */
+void procura_arv(arv *);
+
+int procura_valor(int, arv *);
 
 int main(void)
 {
     arv *p;
     p = cria_vazia();
 
-    p=chama_insere(p);
+    p = chama_insere(p);
 
     imprime_arv(p);
-    
+
+    procura_arv(p);
 
     return 0;
 }
@@ -44,7 +49,7 @@ arv *cria_vazia(void)
 {
     return NULL;
 }
-arv* chama_insere(arv* p)
+arv *chama_insere(arv *p)
 {
     int valor, teste = 9;
     do
@@ -58,10 +63,9 @@ arv* chama_insere(arv* p)
         scanf("%d", &teste);
         printf("\n------------------------------------------------------------------\n");
 
-    } while (teste==1);
+    } while (teste == 1);
 
     return p;
-
 }
 arv *insere_folha(arv *a, int info)
 {
@@ -120,4 +124,46 @@ void imprime_arv(arv *a)
         imprime_arv(a->dir);
         printf("\n%d\n", a->info);
     }
+}
+
+void procura_arv(arv *a)
+{
+    int valor, teste = 9, aux;
+
+    do
+    {
+        printf("\n---------------------------------------------------------------------\n");
+        printf("\n Digite o valor que deseja procurar:");
+        scanf("%d", &valor);
+        aux = procura_valor(valor, a);
+        if (aux == 0)
+        {
+            printf("\nValor nao pertente a arvore.\n");
+        }
+        aux = 0;
+        printf("\nDigite 1 para procurar outro valor ou outro numero para sair.");
+        scanf("%d", &teste);
+        printf("\n---------------------------------------------------------------------\n");
+    } while (teste == 1);
+}
+
+int procura_valor(int valor, arv *a)
+{
+    int teste = 0;
+    if (a != NULL)
+    {
+        if (valor == a->info)
+        {
+            teste = 1;
+            printf("\n Valor pertence a arvore.");
+            return teste;
+        }
+        else
+        {
+            procura_valor(valor, a->esq);
+            procura_valor(valor, a->dir);
+        }
+    }
+
+    return teste;
 }
