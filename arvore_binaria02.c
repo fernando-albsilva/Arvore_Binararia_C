@@ -16,6 +16,9 @@ typedef struct arvbin arv;
 /* Cria uma arvore vazia retornando NULL */
 arv *cria_vazia(void);
 
+/* Pergunta para o usuario se quer inserir uma folha na arvore e qual valor */
+arv* chama_insere(arv*);
+
 /*insere uma folha na arvore , se for maior que seu antecessor é jogada para o ramo da direita e se for 
 menor para o ramo da esquerda */
 arv *insere_folha(arv *, int);
@@ -23,12 +26,27 @@ arv *insere_folha(arv *, int);
 /*imprime a arvore */
 void imprime_arv(arv *);
 
+
 int main(void)
 {
     arv *p;
-    int valor, teste = 9;
     p = cria_vazia();
 
+    p=chama_insere(p);
+
+    imprime_arv(p);
+    
+
+    return 0;
+}
+
+arv *cria_vazia(void)
+{
+    return NULL;
+}
+arv* chama_insere(arv* p)
+{
+    int valor, teste = 9;
     do
     {
 
@@ -41,17 +59,10 @@ int main(void)
         printf("\n------------------------------------------------------------------\n");
 
     } while (teste==1);
-    
 
-    imprime_arv(p);
-    return 0;
+    return p;
+
 }
-
-arv *cria_vazia(void)
-{
-    return NULL;
-}
-
 arv *insere_folha(arv *a, int info)
 {
     arv *p, *inicio;
