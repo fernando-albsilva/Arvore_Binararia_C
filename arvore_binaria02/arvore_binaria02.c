@@ -34,6 +34,7 @@ int procura_valor(int, arv *);
 int main(void)
 {
     arv *p;
+    
     p = cria_vazia();
 
     p = chama_insere(p);
