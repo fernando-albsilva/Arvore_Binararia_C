@@ -1,0 +1,18 @@
+ALgoritmo do arquivo arvore_binaria02.c
+
+struct arvbin
+{
+    int info;
+    struct arvbin *esq;
+    struct arvbin *dir;
+};
+
+=> A arvore criada é baseada na estrutura acima;
+
+=> Diferente do algoritmo do arquivo arvore_binaria sua estrutura nao é criada toda de uma vez,
+   é perguntando ao usuario ser quer ser inserido alguma folha na arvore e o espeço é alocado dinamicamente.
+
+=> Se o valor inserido na folha for maior que o antecessor ele é jogado para seu filho a direita, se for
+   menor é jogado para seu filho a esquerda e assim por diante.
+
+
