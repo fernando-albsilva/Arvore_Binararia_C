@@ -29,7 +29,10 @@ void imprime_arv(arv *);
 /*Procura se um valor pertence a arvore */
 void procura_arv(arv *);
 
-int procura_valor(int, arv *);
+/*Libera memoria alocada pela arvore */
+arv* libera_arv(arv *);
+
+int procura_valor(int, arv *,int);
 
 int main(void)
 {
@@ -42,6 +45,8 @@ int main(void)
     imprime_arv(p);
 
     procura_arv(p);
+
+    p=libera_arv(p);
 
     return 0;
 }
@@ -129,14 +134,14 @@ void imprime_arv(arv *a)
 
 void procura_arv(arv *a)
 {
-    int valor, teste = 9, aux;
+    int valor, teste = 9, aux=0,teste_proc=0;
 
     do
     {
         printf("\n---------------------------------------------------------------------\n");
         printf("\n Digite o valor que deseja procurar:");
         scanf("%d", &valor);
-        aux = procura_valor(valor, a);
+        aux = procura_valor(valor,a,teste_proc);
         if (aux == 0)
         {
             printf("\nValor nao pertente a arvore.\n");
@@ -144,27 +149,47 @@ void procura_arv(arv *a)
         aux = 0;
         printf("\nDigite 1 para procurar outro valor ou outro numero para sair.");
         scanf("%d", &teste);
-        printf("\n---------------------------------------------------------------------\n");
+        
     } while (teste == 1);
 }
 
-int procura_valor(int valor, arv *a)
+int procura_valor(int valor, arv *a,int teste)
 {
-    int teste = 0;
+    
     if (a != NULL)
     {
         if (valor == a->info)
         {
             teste = 1;
-            printf("\n Valor pertence a arvore.");
+            printf("\n Valor pertence a arvore.\n");
             return teste;
         }
         else
         {
-            procura_valor(valor, a->esq);
-            procura_valor(valor, a->dir);
+           
+           
+           teste+=procura_valor(valor, a->esq,teste);
+           teste+=procura_valor(valor, a->dir,teste);
+           return teste;
+           
+            
         }
     }
 
-    return teste;
+    return 0;
+}
+
+arv* libera_arv(arv * a)
+{
+    if (a==NULL)
+    {
+        return NULL;
+    }else
+    {
+        libera_arv(a->esq);
+        libera_arv(a->dir);
+        free(a);
+    }
+
+    return NULL;
 }
