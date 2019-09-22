@@ -134,7 +134,7 @@ void imprime_arv(arv *a)
     } 
 }
     
-}
+
 
 void procura_arv(arv *a)
 {
@@ -171,9 +171,11 @@ int procura_valor(int valor, arv *a, int teste)
         else
         {
 
+            if(valor < a->info)
             teste += procura_valor(valor, a->esq, teste);
+            else
             teste += procura_valor(valor, a->dir, teste);
-            return teste;
+            return teste;   
         }
     }
 
