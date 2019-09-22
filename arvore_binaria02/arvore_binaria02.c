@@ -34,6 +34,10 @@ int procura_valor(int, arv *, int);
 /*Libera memoria alocada pela arvore */
 arv *libera_arv(arv *);
 
+/*Retira uma folha da arvore binaria */
+arv *retira_folha(arv *);
+
+arv *retira(arv *, int);
 int main(void)
 {
     arv *p;
@@ -45,6 +49,10 @@ int main(void)
     imprime_arv(p);
 
     procura_arv(p);
+
+    p = retira_folha(p);
+
+    imprime_arv(p);
 
     p = libera_arv(p);
 
@@ -131,10 +139,8 @@ void imprime_arv(arv *a)
         imprime_arv(a->esq);
         imprime_arv(a->dir);
         printf("\n%d\n", a->info);
-    } 
+    }
 }
-    
-
 
 void procura_arv(arv *a)
 {
@@ -171,11 +177,11 @@ int procura_valor(int valor, arv *a, int teste)
         else
         {
 
-            if(valor < a->info)
-            teste += procura_valor(valor, a->esq, teste);
+            if (valor < a->info)
+                teste += procura_valor(valor, a->esq, teste);
             else
-            teste += procura_valor(valor, a->dir, teste);
-            return teste;   
+                teste += procura_valor(valor, a->dir, teste);
+            return teste;
         }
     }
 
@@ -196,4 +202,83 @@ arv *libera_arv(arv *a)
     }
 
     return NULL;
+}
+
+arv *retira_folha(arv *a)
+{
+    int valor, teste = 0;
+
+    do
+    {
+        printf("--------------------------------------------------------------------------");
+        printf("\n Digite o valor a ser retirado da arvore : ");
+        scanf("%d", &valor);
+        a = retira(a, valor);
+        printf("\n Se deseja retirar outro valor digiti 1 ou qualquer numero para sair : ");
+    } while (teste == 1);
+
+    return a;
+}
+
+arv *retira(arv *a, int valor)
+{
+    arv *aux;
+    if (a == NULL)
+    {
+        printf("\n Valor nao pertence a arvore \n");
+        return NULL;
+    }
+    else
+    {
+        if (valor < a->info)
+        {
+            a->esq = retira(a->esq, valor);
+        }
+        else
+        {
+            if (valor > a->info)
+            {
+                a->dir = retira(a->dir, valor);
+            }
+            else
+            {
+                if (a->esq == NULL && a->dir == NULL)
+                {
+                    free(a);
+                    return NULL;
+                }
+                else
+                {
+                    if (a->esq == NULL)
+                    {
+                        aux = a;
+                        a = a->dir;
+                        free(aux);
+                    }
+                    else
+                    {
+                        if (a->dir == NULL)
+                        {
+                            aux = a;
+                            a = a->esq;
+                            free(aux);
+                        }
+                        else
+                        {
+                            aux = a->esq;
+                            while (aux->dir != NULL)
+                            {
+                                aux = aux->dir;
+                            }
+                            a->info = aux->info;
+                            aux->info = valor;
+                            a->esq = retira(a->esq, valor);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return a;
 }
